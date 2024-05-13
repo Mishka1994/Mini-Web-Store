@@ -1,5 +1,6 @@
 from django.db import models
 
+from config import settings
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -48,4 +49,10 @@ class Product(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
+
+class Cart(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
+    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Общая стоимость')
+    quantity = models.IntegerField(verbose_name='Количество товара')
 

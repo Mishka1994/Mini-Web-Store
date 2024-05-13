@@ -17,7 +17,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-class Subcategories(models.Model):
+class Subcategory(models.Model):
     title_subcategory = models.CharField(max_length=100, verbose_name='Название подкатегории')
     description_subcategory = models.TextField(verbose_name='Описание подкатегории', **NULLABLE)
     main_category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='category',
@@ -39,8 +39,8 @@ class Product(models.Model):
     product_characteristics = models.TextField(verbose_name='Характеристики товара', **NULLABLE)
 
     category = models.ManyToManyField(Category, related_name='category_product', verbose_name='Категория товара')
-    subcategory = models.ManyToManyField(Subcategories, related_name='subcategory_product',
-                                         verbose_name='Подкатегория товара')
+    subcategory = models.ManyToManyField(Subcategory, related_name='subcategory_product',
+                                         verbose_name='Подкатегория товара', **NULLABLE)
 
     def __str__(self):
         return f'{self.title_product} - ({self.price}, {self.inventory_balance})'

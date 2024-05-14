@@ -1,19 +1,8 @@
-from django.shortcuts import render
 from rest_framework import generics
 
-from store.models import Category, Subcategory, Product
+from store.models import Product
 from store.paginators import ProductPaginator
-from store.serializers import CategorySerializer, SubcategorySerializer, ProductSerializer, ProductListSerializer
-
-
-class CategoryCreateView(generics.CreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-class SubcategoryCreateView(generics.CreateAPIView):
-    queryset = Subcategory.objects.all()
-    serializer_class = SubcategorySerializer
+from store.serializers.product import ProductSerializer, ProductListSerializer
 
 
 class ProductCreateView(generics.CreateAPIView):

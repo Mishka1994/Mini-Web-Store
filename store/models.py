@@ -6,6 +6,7 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Category(models.Model):
+    """Сущность категории"""
     title_category = models.CharField(max_length=100, verbose_name='Название категории')
     description_category = models.TextField(verbose_name='Описание категории', **NULLABLE)
 
@@ -18,6 +19,7 @@ class Category(models.Model):
 
 
 class Subcategory(models.Model):
+    """Сущность подкатегории """
     title_subcategory = models.CharField(max_length=100, verbose_name='Название подкатегории')
     description_subcategory = models.TextField(verbose_name='Описание подкатегории', **NULLABLE)
     main_category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='category',
@@ -32,6 +34,7 @@ class Subcategory(models.Model):
 
 
 class Product(models.Model):
+    """Сущность продукта"""
     title_product = models.CharField(max_length=100, verbose_name='Название товара')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
     price_with_discount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена со скидкой')
@@ -51,8 +54,13 @@ class Product(models.Model):
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product)
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Общая стоимость')
-    quantity = models.IntegerField(verbose_name='Количество товара')
+    """Сущность корзины"""
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
 
+
+class CartItem(models.Model):
+    """Сущность элемента корзины"""
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart', verbose_name='Корзина')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product', verbose_name='Товар')
+    product_quantity = models.IntegerField(default=0, verbose_name='Количество товара')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')

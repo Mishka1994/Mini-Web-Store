@@ -1,5 +1,4 @@
 from rest_framework import generics
-
 from store.models import Product
 from store.paginators import ProductPaginator
 from store.serializers.product import ProductSerializer, ProductListSerializer

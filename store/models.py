@@ -40,7 +40,7 @@ class Product(models.Model):
 
     category = models.ManyToManyField(Category, related_name='category_product', verbose_name='Категория товара')
     subcategory = models.ManyToManyField(Subcategory, related_name='subcategory_product',
-                                         verbose_name='Подкатегория товара', **NULLABLE)
+                                         verbose_name='Подкатегория товара')
 
     def __str__(self):
         return f'{self.title_product} - ({self.price}, {self.inventory_balance})'
